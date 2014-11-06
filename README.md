@@ -15,3 +15,21 @@ Prefers a global `Promise` object (native or polyfill). If one is not detected, 
   - [q](https://github.com/kriskowal/q)
 
 If you have multiple libraries installed (e.g. for testing), and would like to specify one you can use the `PROMISE_IMPL` env variable.
+
+```javascript
+var Promise = require('any-promise');
+
+return Promise
+  .all([xf, f, init, coll])
+  .then(fn);
+
+
+return new Promise(function(resolve, reject){
+  try {
+    resolve(item);
+  } catch(e){
+    reject(e);
+  }
+});
+
+```

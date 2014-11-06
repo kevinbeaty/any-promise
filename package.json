@@ -1,0 +1,35 @@
+{
+  "name": "any-promise",
+  "version": "0.0.1",
+  "description": "Resolve any installed ES6 compatible promise",
+  "main": "any-promise.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kevinbeaty/any-promise"
+  },
+  "keywords": [
+    "promise",
+    "es6"
+  ],
+  "author": "Kevin Beaty",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kevinbeaty/any-promise/issues"
+  },
+  "homepage": "http://github.com/kevinbeaty/any-promise",
+  "dependencies": {},
+  "devDependencies": {
+    "promise": "~6.0.1",
+    "es6-promise": "~2.0.0",
+    "rsvp": "~3.0.14",
+    "bluebird": "~2.3.10",
+    "when": "~3.5.2",
+    "q": "~1.0.1",
+    "native-promise-only": "~0.7.6-a",
+    "promises-aplus-tests": "~2.1.0",
+    "mocha": "~2.0.1"
+  }
+}

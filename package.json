@@ -1,6 +1,6 @@
 {
   "name": "any-promise",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Resolve any installed ES6 compatible promise",
   "main": "any-promise.js",
   "browser": "any-promise-shim.js",
@@ -24,13 +24,13 @@
   "dependencies": {},
   "devDependencies": {
     "promise": "~6.0.1",
-    "es6-promise": "~2.0.0",
-    "rsvp": "~3.0.14",
-    "bluebird": "~2.3.10",
-    "when": "~3.5.2",
-    "q": "~1.0.1",
+    "es6-promise": "~2.0.1",
+    "rsvp": "~3.0.16",
+    "bluebird": "~2.5.3",
+    "when": "~3.6.4",
+    "q": "~1.1.2",
     "native-promise-only": "~0.7.6-a",
     "promises-aplus-tests": "~2.1.0",
-    "mocha": "~2.0.1"
+    "mocha": "~2.1.0"
   }
 }

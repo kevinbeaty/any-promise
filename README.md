@@ -4,7 +4,7 @@
 
 Let your library support any ES6 compatible Promise library or polyfill and leave the choice to the end user. The end user can install a polyfill or `npm install` their preference before using this library and the installed library will be automatically detected.
 
-Prefers a global `Promise` object (native or polyfill). If one is not detected, attempts to load libraries in the following order.  The first successful `require` will be exported.
+Attempts to load libraries in the following order.  The first successful `require` will be exported.
 
   - [es6-promise](https://github.com/jakearchibald/es6-promise)
   - [promise](https://github.com/then/promise)
@@ -13,6 +13,8 @@ Prefers a global `Promise` object (native or polyfill). If one is not detected, 
   - [rsvp](https://github.com/tildeio/rsvp.js)
   - [when](https://github.com/cujojs/when)
   - [q](https://github.com/kriskowal/q)
+
+If no library is installed, attempts to export the global `Promise` (native or polyfill). The `browserify` version will always export the the global `Promise`, so polyfill as necessary.
 
 If you have multiple libraries installed (e.g. for testing), and would like to specify one you can use the `PROMISE_IMPL` env variable.
 

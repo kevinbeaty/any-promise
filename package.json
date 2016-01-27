@@ -23,14 +23,14 @@
   "homepage": "http://github.com/kevinbeaty/any-promise",
   "dependencies": {},
   "devDependencies": {
-    "promise": "~6.0.1",
-    "es6-promise": "~2.0.1",
-    "rsvp": "~3.0.16",
-    "bluebird": "~2.5.3",
-    "when": "~3.6.4",
-    "q": "~1.1.2",
-    "native-promise-only": "~0.7.6-a",
+    "promise": "~7.1.1",
+    "es6-promise": "~3.0.2",
+    "rsvp": "~3.1.0",
+    "bluebird": "~3.1.5",
+    "when": "~3.7.7",
+    "q": "~1.4.1",
+    "native-promise-only": "~0.8.1",
     "promises-aplus-tests": "~2.1.0",
-    "mocha": "~2.1.0"
+    "mocha": "~2.4.2"
   }
 }

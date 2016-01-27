@@ -21,7 +21,10 @@
     "url": "https://github.com/kevinbeaty/any-promise/issues"
   },
   "homepage": "http://github.com/kevinbeaty/any-promise",
-  "dependencies": {},
+  "dependencies": {
+    "app-root-path": "^1.0.0",
+    "pkg-conf": "^1.1.1"
+  },
   "devDependencies": {
     "promise": "~7.1.1",
     "es6-promise": "~3.0.2",

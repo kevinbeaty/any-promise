@@ -1,15 +1,15 @@
 language: node_js
 sudo: false
 node_js:
-  - "0.10"
   - "0.12"
   - "4.0"
   - "5.0"
 env:
-  - PROMISE_IMPL=es6-promise
-  - PROMISE_IMPL=promise
-  - PROMISE_IMPL=native-promise-only
-  - PROMISE_IMPL=bluebird
-  - PROMISE_IMPL=rsvp
-  - PROMISE_IMPL=when
-  #  - PROMISE_IMPL=q
+  - ANY_PROMISE=
+  - ANY_PROMISE=es6-promise
+  - ANY_PROMISE=promise
+  - ANY_PROMISE=native-promise-only
+  - ANY_PROMISE=bluebird
+  - ANY_PROMISE=rsvp
+  - ANY_PROMISE=when
+  # - ANY_PROMISE=q

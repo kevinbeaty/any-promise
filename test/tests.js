@@ -1,7 +1,19 @@
 "use strict";
-var Prom = require('../');
+var expectedImpl = 'global.Promise'
+if(process.env.ANY_PROMISE){
+  expectedImpl = process.env.ANY_PROMISE
+  require('../register')(expectedImpl)
+}
 
+var Prom = require('../');
 var tests = require('promises-aplus-tests');
+var impl = require('../register')().implementation
+
+if(impl !== expectedImpl){
+  throw new Error('Expecting '+expectedImpl+' got '+impl)
+}
+
+console.log('Starting tests with implementation '+impl);
 
 function deferred(){
   var resolve, reject;

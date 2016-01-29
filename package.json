@@ -1,9 +1,11 @@
 {
   "name": "any-promise",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Resolve any installed ES6 compatible promise",
-  "main": "any-promise.js",
-  "browser": "any-promise-shim.js",
+  "main": "index.js",
+  "browser": {
+    "./register.js": "./register-shim.js"
+  },
   "scripts": {
     "test": "make test"
   },

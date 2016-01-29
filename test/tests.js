@@ -22,7 +22,7 @@ if(process.env.ANY_PROMISE){
 
 var Prom = require('../');
 var tests = require('promises-aplus-tests');
-var impl = require('../register')().implementation
+var impl = require('../implementation')
 
 if(impl !== expectedImpl){
   throw new Error('Expecting '+expectedImpl+' got '+impl)

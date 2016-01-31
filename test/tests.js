@@ -4,18 +4,14 @@ if(process.env.ANY_PROMISE){
   // should load registration regardless
   expectedImpl = process.env.ANY_PROMISE
   require('../register')(expectedImpl)
-} else if(process.env.PROMISE_IMPL){
-  // should load implementation specified by env variable
-  expectedImpl = process.env.PROMISE_IMPL
 } else {
   var version = (/v(\d+)\.(\d+)\.(\d+)/).exec(process.version)
   if(version && +version[1] == 0 && +version[2] < 12){
-    // Node <0.12 should load first successful require in
-    // priority list if not registered and no PROMISE_IMPL
+    // Node < 0.12 should load first successful require in
+    // priority list if not registered
     expectedImpl = 'es6-promise'
   } else {
-    // Node >= 0.12 should load global.Promise
-    // if not registered and no PROMISE_IMPL
+    // Node >= 0.12 should load global.Promise if not registered
     expectedImpl = 'global.Promise'
   }
 }

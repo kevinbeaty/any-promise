@@ -36,7 +36,7 @@ $ npm install when
 # Install any-promise to allow registration
 $ npm install any-promise
 # Install any libraries you would like to use depending on any-promise
-$ npm install fs-promise
+$ npm install mz
 # Remove potentially duplicated `any-promise` packages
 $ npm dedupe
 ```

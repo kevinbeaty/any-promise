@@ -1,6 +1,6 @@
 {
   "name": "any-promise",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Resolve any installed ES6 compatible promise",
   "main": "index.js",
   "browser": {

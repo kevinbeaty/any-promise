@@ -10,17 +10,16 @@ var registered = null
  * following priority:
  *
  * 1. Previous registration
- * 2. Implementation specified by PROMISE_IMPL
- * 3. global.Promise if node.js version >= 0.12
- * 4. Auto detected promise based on first sucessful require of
+ * 2. global.Promise if node.js version >= 0.12
+ * 3. Auto detected promise based on first sucessful require of
  *    known promise libraries. Note this is a last resort, as the
  *    loaded library is non-deterministic. node.js >= 0.12 will
  *    always use global.Promise over this priority list.
- * 5. Throws error.
+ * 4. Throws error.
  */
 module.exports = register
 function register(implementation){
-  implementation = implementation || process.env.PROMISE_IMPL || null
+  implementation = implementation || null
 
   if(registered !== null
       && implementation !== null

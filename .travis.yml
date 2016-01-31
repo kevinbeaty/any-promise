@@ -14,7 +14,4 @@ env:
   - ANY_PROMISE=bluebird
   - ANY_PROMISE=rsvp
   - ANY_PROMISE=when
-  - PROMISE_IMPL=
-  - PROMISE_IMPL=es6-promise
-  - PROMISE_IMPL=bluebird
   # - ANY_PROMISE=q

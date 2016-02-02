@@ -24,8 +24,6 @@ You must register your preference before any call to `require('any-promise')` (b
 
 Registration is not required for Node.js version >= 0.12 as a native `Promise` implementation is included. If no preference is registered, the global `Promise` will be used.
 
-To ensure registration works correctly across all dependencies, it is necessary that only one `any-promise` package is installed in the dependency tree. To ensure this, you should use [`npm dedupe`](https://docs.npmjs.com/cli/dedupe) or manually remove any `any-promise` packages not at the top level of your application dependency tree.
-
 #### Example:
 
 Assuming `when` is the desired Promise implementation:

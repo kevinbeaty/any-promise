@@ -1,6 +1,6 @@
 {
   "name": "any-promise",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Resolve any installed ES6 compatible promise",
   "main": "index.js",
   "browser": {
@@ -25,14 +25,14 @@
   "homepage": "http://github.com/kevinbeaty/any-promise",
   "dependencies": {},
   "devDependencies": {
-    "promise": "~7.1.1",
-    "es6-promise": "~3.0.2",
-    "rsvp": "~3.1.0",
-    "bluebird": "~3.1.5",
-    "when": "~3.7.7",
-    "q": "~1.4.1",
-    "native-promise-only": "~0.8.1",
-    "promises-aplus-tests": "~2.1.0",
-    "mocha": "~2.4.2"
+    "promise": "^7.0.0",
+    "es6-promise": "^3.0.0",
+    "rsvp": "^3.0.0",
+    "bluebird": "^3.0.0",
+    "when": "^3.0.0",
+    "q": "^1.0.0",
+    "native-promise-only": "^0.8.0",
+    "promises-aplus-tests": "^2.0.0",
+    "mocha": "^2.0.0"
   }
 }

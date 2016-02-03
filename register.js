@@ -1,5 +1,8 @@
 "use strict"
-var registered = null
+    // global key for user preferred registration
+var REGISTRATION_KEY = '@@any-promise/REGISTRATION',
+    // Prior registration (preferred or detected)
+    registered = null
 
 /**
  * Registers the given implementation.  An implementation must
@@ -21,6 +24,11 @@ module.exports = register
 function register(implementation){
   implementation = implementation || null
 
+  // load any previous global registration
+  if(registered === null){
+    registered = global[REGISTRATION_KEY] || null
+  }
+
   if(registered !== null
       && implementation !== null
       && registered.implementation !== implementation){
@@ -35,6 +43,8 @@ function register(implementation){
     if(implementation !== null){
       // require implementation if we haven't done yet and is specified
       registered = loadImplementation(implementation)
+      // register preference globally in case multiple installations
+      global[REGISTRATION_KEY] = registered
     } else if(shouldPreferGlobalPromise()){
       // if no implementation or env specified use global.Promise
       registered = loadGlobal()
@@ -87,7 +97,7 @@ function shouldPreferGlobalPromise(){
  * Otherwise uses require
  */
 function loadImplementation(implementation){
-  if(implementation == 'global.Promise'){
+  if(implementation === 'global.Promise'){
     return loadGlobal()
   }
 

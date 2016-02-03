@@ -35,8 +35,6 @@ $ npm install when
 $ npm install any-promise
 # Install any libraries you would like to use depending on any-promise
 $ npm install mz
-# Remove potentially duplicated `any-promise` packages
-$ npm dedupe
 ```
 Register your preference in the application entry point before any other `require` of packages that load `any-promise`:
 
@@ -48,7 +46,7 @@ require('any-promise/register')('when')
 Now that the implementation is registered, you can use any package depending on `any-promise`:
 
 ```javascript
-var fsp = require('fs-promise') // fs-promise will use `when` for promise implementations
+var fsp = require('mz/fs') // mz/fs will use registered `when` promises
 var Promise = require('any-promise')  // the registered `when.Promise`
 ```
 

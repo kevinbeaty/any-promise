@@ -43,8 +43,6 @@ function register(implementation){
     if(implementation !== null){
       // require implementation if we haven't done yet and is specified
       registered = loadImplementation(implementation)
-      // register preference globally in case multiple installations
-      global[REGISTRATION_KEY] = registered
     } else if(shouldPreferGlobalPromise()){
       // if no implementation or env specified use global.Promise
       registered = loadGlobal()
@@ -54,6 +52,9 @@ function register(implementation){
       // to load something without throwing error
       registered = tryAutoDetect()
     }
+
+    // register preference globally in case multiple installations
+    global[REGISTRATION_KEY] = registered
   }
 
   if(registered === null){

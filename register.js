@@ -118,14 +118,16 @@ function shouldPreferGlobalPromise(){
  * Otherwise uses require
  */
 function loadImplementation(implementation){
-  if(implementation === 'global.Promise'){
+  if(implementation === rootName + '.Promise'){
     return loadGlobal()
   }
 
-  var lib = require(implementation)
-  return {
-    Promise: lib.Promise || lib,
-    implementation: implementation
+  if(isNode){
+    var lib = require(implementation)
+    return {
+      Promise: lib.Promise || lib,
+      implementation: implementation
+    }
   }
 }
 

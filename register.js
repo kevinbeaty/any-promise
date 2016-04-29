@@ -2,7 +2,10 @@
     // global key for user preferred registration
 var REGISTRATION_KEY = '@@any-promise/REGISTRATION',
     // Prior registration (preferred or detected)
-    registered = null
+    registered = null,
+    isNode = typeof module === 'object' && module && !module.nodeType,
+    root = isNode ? global : window,
+    rootName = isNode ? 'global' : 'window'
 
 /**
  * Registers the given implementation.  An implementation must
@@ -21,12 +24,15 @@ var REGISTRATION_KEY = '@@any-promise/REGISTRATION',
  * 4. Throws error.
  */
 module.exports = register
-function register(implementation){
+function register(implementation, opts){
   implementation = implementation || null
+  opts = opts || {}
+  // global registration unless explicitly  {global: false} in options (default true)
+  var registerGlobal = opts.global !== false;
 
   // load any previous global registration
-  if(registered === null){
-    registered = global[REGISTRATION_KEY] || null
+  if(registered === null && registerGlobal){
+    registered = root[REGISTRATION_KEY] || null
   }
 
   if(registered !== null
@@ -41,8 +47,16 @@ function register(implementation){
   if(registered === null){
     // load implementation
     if(implementation !== null){
-      // require implementation if we haven't done yet and is specified
-      registered = loadImplementation(implementation)
+      // use provided implementation
+      if(typeof opts.Promise !== 'undefined'){
+        registered = {
+          Promise: opts.Promise,
+          implementation: implementation
+        }
+      } else {
+        // require implementation if implementation is specified but not provided
+        registered = loadImplementation(implementation)
+      }
     } else if(shouldPreferGlobalPromise()){
       // if no implementation or env specified use global.Promise
       registered = loadGlobal()
@@ -50,11 +64,15 @@ function register(implementation){
       // try to auto detect implementation. This is non-deterministic
       // and should prefer other branches, but this is our last chance
       // to load something without throwing error
-      registered = tryAutoDetect()
+      if (isNode){
+        registered = tryAutoDetect()
+      }
     }
 
-    // register preference globally in case multiple installations
-    global[REGISTRATION_KEY] = registered
+    if(registerGlobal){
+      // register preference globally in case multiple installations
+      root[REGISTRATION_KEY] = registered
+    }
   }
 
   if(registered === null){
@@ -76,11 +94,13 @@ function register(implementation){
  */
 function shouldPreferGlobalPromise(){
   // Versions < 0.11 did not have global Promise
-  if(typeof global.Promise !== 'undefined'){
-    // do not use for version < 0.12 as version 0.11 contained buggy versions
-    var version = (/v(\d+)\.(\d+)\.(\d+)/).exec(process.version)
-    if(version && +version[1] == 0 && +version[2] < 12){
-      return false
+  if(typeof root.Promise !== 'undefined'){
+    if(isNode){
+      // do not use for version < 0.12 as version 0.11 contained buggy versions
+      var version = (/v(\d+)\.(\d+)\.(\d+)/).exec(process.version)
+      if(version && +version[1] == 0 && +version[2] < 12){
+        return false
+      }
     }
     return true
   }
@@ -113,10 +133,10 @@ function loadImplementation(implementation){
  * Loads global.Promise if defined, otherwise returns null
  */
 function loadGlobal(){
-  if(typeof global.Promise !== 'undefined'){
+  if(typeof root.Promise !== 'undefined'){
     return {
-      Promise: global.Promise,
-      implementation: 'global.Promise'
+      Promise: root.Promise,
+      implementation: rootName + '.Promise'
     }
   }
   return null

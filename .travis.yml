@@ -9,6 +9,7 @@ node_js:
   - "4"
   - "5"
 env:
+  - BROWSER=1
   - ANY_PROMISE=
   - ANY_PROMISE=es6-promise
   - ANY_PROMISE=promise

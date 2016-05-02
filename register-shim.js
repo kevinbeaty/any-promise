@@ -1,14 +1,9 @@
-"use strict"
-var registered = {
-  Promise: window.Promise,
-  implementation: 'window.Promise'
-}
+"use strict";
+module.exports = require('./lib')(window, loadImplementation)
 
-/**
- * any-promise in browser is always global
- * polyfill as necessary
- */
-module.exports = register
-function register(){
-  return registered
+function loadImplementation(){
+  return {
+    Promise: window.Promise,
+    implementation: 'window.Promise'
+  }
 }

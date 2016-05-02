@@ -9,7 +9,7 @@ clean:
 	rm -rf build
 
 test: | node_modules
-	`npm bin`/mocha test/tests.js
+	`npm bin`/mocha test/index.js
 
 node_modules:
 	npm install

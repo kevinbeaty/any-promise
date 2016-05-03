@@ -12,6 +12,8 @@ var REGISTRATION_KEY = '@@any-promise/REGISTRATION',
  * If called with no arguments, will return registration in
  * following priority:
  *
+ * For Node.js:
+ *
  * 1. Previous registration
  * 2. global.Promise if node.js version >= 0.12
  * 3. Auto detected promise based on first sucessful require of
@@ -19,6 +21,18 @@ var REGISTRATION_KEY = '@@any-promise/REGISTRATION',
  *    loaded library is non-deterministic. node.js >= 0.12 will
  *    always use global.Promise over this priority list.
  * 4. Throws error.
+ *
+ * For Browser:
+ *
+ * 1. Previous registration
+ * 2. window.Promise
+ * 3. Throws error.
+ *
+ * Options:
+ *
+ * Promise: Desired Promise constructor
+ * global: Boolean - Should the registration be cached in a global variable to
+ * allow cross dependency/bundle registration?  (default true)
  */
 module.exports = function(root, loadImplementation){
   return function register(implementation, opts){
@@ -57,14 +71,6 @@ module.exports = function(root, loadImplementation){
         // register preference globally in case multiple installations
         root[REGISTRATION_KEY] = registered
       }
-    }
-
-    if(registered === null){
-      throw new Error('Cannot find any-promise implementation nor'+
-        ' global.Promise. You must install polyfill or call'+
-        ' require("any-promise/register") with your preferred'+
-        ' implementation, e.g. require("any-promise/register")("bluebird")'+
-        ' on application load prior to any require("any-promise").')
     }
 
     return registered

@@ -67,11 +67,11 @@ require('../register')('es6-promise', {Promise: require('es6-promise').Promise, 
 
 #### Example:
 
-Assuming `when` is the desired Promise implementation:
+Assuming `bluebird` is the desired Promise implementation:
 
 ```bash
 # Install preferred promise library
-$ npm install when
+$ npm install bluebird
 # Install any-promise to allow registration
 $ npm install any-promise
 # Install any libraries you would like to use depending on any-promise
@@ -81,18 +81,18 @@ Register your preference in the application entry point before any other `requir
 
 ```javascript
 // top of application index.js or other entry point
-require('any-promise/register')('when')
+require('any-promise/register')('bluebird')
 
 // -or- Equivalent to above in Node.js, but browser version needs polyfill or explicit registration
-require('any-promise/register')('when', {Promise: require('when').Promise})
+require('any-promise/register')('bluebird', {Promise: require('bluebird')})
 ```
 
 Now that the implementation is registered, you can use any package depending on `any-promise`:
 
 
 ```javascript
-var fsp = require('mz/fs') // mz/fs will use registered `when` promises
-var Promise = require('any-promise')  // the registered `when.Promise`
+var fsp = require('mz/fs') // mz/fs will use registered bluebird promises
+var Promise = require('any-promise')  // the registered bluebird promise 
 ```
 
 It is safe to call `register` multiple times, but it must always be with the same implementation.

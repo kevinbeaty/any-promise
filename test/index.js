@@ -8,17 +8,17 @@ var REGISTRATION_KEY = '@@any-promise/REGISTRATION',
 if(process.env.BROWSER){
   it('Promises/A+ tests in browser', function(done){
     this.timeout(60000)
-    zuul('test-browser.js', done)
+    zuul('browser.js', done)
   })
 } else if(process.env.BROWSER_LOCAL){
   it('Promises/A+ tests in browser with local registration', function(done){
     this.timeout(60000)
-    zuul('test-browser-local.js', done)
+    zuul('browser-local.js', done)
   })
 } else if(process.env.BROWSER_POLYFILL){
   it('Promises/A+ tests in browser with polyfill', function(done){
     this.timeout(60000)
-    zuul('test-browser-polyfill.js', done)
+    zuul('browser-polyfill.js', done)
   })
 } else {
   if(process.env.ANY_PROMISE){
@@ -59,7 +59,7 @@ if(process.env.BROWSER){
 }
 
 function zuul(file, done){
-  var zuul = spawn('zuul', ['--phantom', '--ui', 'mocha-bdd', '--', 'test/browser.js'], {stdio: 'inherit'})
+  var zuul = spawn('zuul', ['--phantom', '--ui', 'mocha-bdd', '--', 'test/'+file], {stdio: 'inherit'})
   zuul.on('close', function (code) {
     if(code !== 0){
       throw new Error('Running tests in browser did not exit successfully.')

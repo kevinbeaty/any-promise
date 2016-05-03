@@ -9,7 +9,7 @@ clean:
 	rm -rf build
 
 test: | node_modules
-	`npm bin`/mocha test/index.js
+	npm test
 
 node_modules:
 	npm install
@@ -22,7 +22,7 @@ node_modules:
 
 js: $(JS_TARGET) $(JS_TARGET:.js=.min.js)
 
-$(JS_TARGET): $(PROJECT).js | build
+$(JS_TARGET): index.js register-shim.js register.js loader.js | build
 	`npm bin`/browserify $< > $@
 
 build:

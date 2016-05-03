@@ -1,10 +1,9 @@
 'use strict';
 
 var REGISTRATION_KEY = '@@any-promise/REGISTRATION'
+require('es6-promise').polyfill()
 
-require('../register')('bluebird', {Promise: require('bluebird')})
-
-if(window[REGISTRATION_KEY].implementation !== 'bluebird'){
+if(window[REGISTRATION_KEY].implementation !== 'window.Promise'){
   throw new Error('Expecting global registration')
 }
 

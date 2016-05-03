@@ -8,8 +8,11 @@ node_js:
   - "iojs-v3"
   - "4"
   - "5"
+  - "6"
 env:
   - BROWSER=1
+  - BROWSER_LOCAL=1
+  - BROWSER_POLYFILL=1
   - ANY_PROMISE=
   - ANY_PROMISE=es6-promise
   - ANY_PROMISE=promise

@@ -1,68 +1,66 @@
 "use strict"
-module.exports = require('./lib')(global, loadImplementation);
+module.exports = require('./loader')(global, loadImplementation);
 
 /**
+ * Node.js version of loadImplementation.
+ *
  * Requires the given implementation and returns the registration
  * containing {Promise, implementation}
  *
- * The returned Promise will be the Promise property if
- * defined, otherwise it will return the library itself.
- *
- * If implementation is global.Promise, calls loadGlobal
+ * If implementation is undefined or global.Promise, loads it
  * Otherwise uses require
  */
 function loadImplementation(implementation){
-  if(!implementation){
-    if(shouldPreferGlobalPromise()){
-      // if no implementation or env specified use global.Promise
-      return loadGlobal()
-    } else {
-      // try to auto detect implementation. This is non-deterministic
-      // and should prefer other branches, but this is our last chance
-      // to load something without throwing error
-      return tryAutoDetect()
-    }
-  } else {
-    if(implementation === 'global.Promise'){
-      return loadGlobal()
-    }
+  var impl = null
 
+  if(shouldPreferGlobalPromise(implementation)){
+    // if no implementation or env specified use global.Promise
+    impl = {
+      Promise: global.Promise,
+      implementation: 'global.Promise'
+    }
+  } else if(implementation){
+    // if implementation specified, require it
     var lib = require(implementation)
-    return {
+    impl = {
       Promise: lib.Promise || lib,
       implementation: implementation
     }
+  } else {
+    // try to auto detect implementation. This is non-deterministic
+    // and should prefer other branches, but this is our last chance
+    // to load something without throwing error
+    impl = tryAutoDetect()
   }
+
+  if(impl === null){
+    throw new Error('Cannot find any-promise implementation nor'+
+      ' global.Promise. You must install polyfill or call'+
+      ' require("any-promise/register") with your preferred'+
+      ' implementation, e.g. require("any-promise/register")("bluebird")'+
+      ' on application load prior to any require("any-promise").')
+  }
+
+  return impl
 }
 
 /**
  * Determines if the global.Promise should be preferred if an implementation
  * has not been registered.
  */
-function shouldPreferGlobalPromise(){
-  // Versions < 0.11 did not have global Promise
-  if(typeof global.Promise !== 'undefined'){
-    // do not use for version < 0.12 as version 0.11 contained buggy versions
+function shouldPreferGlobalPromise(implementation){
+  if(implementation){
+    return implementation === 'global.Promise'
+  } else if(typeof global.Promise !== 'undefined'){
+    // Load global promise if implementation not specified
+    // Versions < 0.11 did not have global Promise
+    // Do not use for version < 0.12 as version 0.11 contained buggy versions
     var version = (/v(\d+)\.(\d+)\.(\d+)/).exec(process.version)
-    if(version && +version[1] == 0 && +version[2] < 12){
-      return false
-    }
-    return true
+    return !(version && +version[1] == 0 && +version[2] < 12)
   }
-  return false
-}
 
-/**
- * Loads global.Promise if defined, otherwise returns null
- */
-function loadGlobal(){
-  if(typeof global.Promise !== 'undefined'){
-    return {
-      Promise: global.Promise,
-      implementation: 'global.Promise'
-    }
-  }
-  return null
+  // do not have global.Promise or another implementation was specified
+  return false
 }
 
 /**

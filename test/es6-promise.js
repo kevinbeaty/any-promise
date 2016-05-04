@@ -8,7 +8,7 @@ var isPromise = require('is-promise')
 test(t => {
   t.is(implementation, 'es6-promise')
   t.is(Promise, ES6Promise)
-  t.truthy(isPromise(new Promise(() => {}, () => {})))
+  t.truthy(isPromise(new Promise(() => {})))
   t.truthy(Promise.all)
   t.truthy(global['@@any-promise/REGISTRATION'].implementation)
 })

@@ -1,4 +1,5 @@
-require('../register')('when')
+import '../register/when'
+
 var test = require('ava')
 var implementation = require('../implementation')
 var Promise = require('..')

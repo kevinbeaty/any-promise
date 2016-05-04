@@ -7,7 +7,7 @@
     "./register.js": "./register-shim.js"
   },
   "scripts": {
-    "test": "mocha test/index.js"
+    "test": "ava"
   },
   "repository": {
     "type": "git",
@@ -25,13 +25,14 @@
   "homepage": "http://github.com/kevinbeaty/any-promise",
   "dependencies": {},
   "devDependencies": {
+    "ava": "^0.14.0",
     "bluebird": "^3.0.0",
     "es6-promise": "^3.0.0",
+    "is-promise": "^2.1.0",
     "mocha": "^2.0.0",
     "native-promise-only": "^0.8.0",
     "phantomjs-prebuilt": "^2.1.7",
     "promise": "^7.0.0",
-    "promises-aplus-tests": "^2.0.0",
     "q": "^1.0.0",
     "rsvp": "^3.0.0",
     "when": "^3.0.0",

@@ -6,7 +6,7 @@ var {spawn} = require('child_process')
 if (+version[1] <= 5) {
   test('skipped browser tests for Node.js <= 5', () => {})
 } else {
-  ;['register', 'local', 'polyfill'].forEach(filename => {
+  ;['register', 'local', 'polyfill', 'shortcut'].forEach(filename => {
     test.serial('Browser test: '+filename, () => zuul(filename))
   })
 }

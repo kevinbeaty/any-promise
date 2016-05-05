@@ -11,7 +11,7 @@ var isPromise = require('is-promise')
 test(t => {
   t.is(implementation, 'global.Promise')
   t.is(Promise, global.Promise)
-  t.truthy(isPromise(new Promise(() => {}, () => {})))
+  t.truthy(isPromise(new Promise(() => {})))
   t.truthy(Promise.all)
   t.truthy(global['@@any-promise/REGISTRATION'].implementation)
 })

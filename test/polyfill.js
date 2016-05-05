@@ -11,7 +11,7 @@ test(t => {
   // but works as test because es6-promise is first successfull require
   // and we polyfilled with es6-promise
   t.is(Promise, global.Promise)
-  t.truthy(isPromise(new Promise(() => {}, () => {})))
+  t.truthy(isPromise(new Promise(() => {})))
   t.truthy(Promise.all)
   t.truthy(global['@@any-promise/REGISTRATION'].implementation)
 })

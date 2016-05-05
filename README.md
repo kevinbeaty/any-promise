@@ -34,18 +34,39 @@ Libraries using `any-promise` should only use [documented](https://developer.moz
 
 As an application author, you can *optionally* register a preferred `Promise` implementation on application startup (before any call to `require('any-promise')`:
 
-```javascript
-require('any-promise/register')('bluebird')
-// -or- require('any-promise/register')('es6-promise')
-// -or- require('any-promise/register')('native-promise-only')
-// -or- require('any-promise/register')('rsvp')
-// -or- require('any-promise/register')('when')
-// -or- require('any-promise/register')('q')
-// -or- require('any-promise/register')('any other ES6 compatible library')
-```
 You must register your preference before any call to `require('any-promise')` (by you or required packages), and only one implementation can be registered. Typically, this registration would occur at the top of the application entry point.
 
-Registration is not required for Node.js version >= 0.12 as a native `Promise` implementation is included. If no preference is registered, the global `Promise` will be used.
+
+#### Registration shortcuts
+
+If you are using a known `Promise` implementation, you can register your preference with a shortcut:
+
+
+```js
+require('any-promise/register/bluebird')
+// -or-
+import 'any-promise/register/q';
+```
+
+Shortcut registration is the preferred registration method as it works in the browser and Node.js. It is also convenient for using with `import` and many test runners, that offer a `--require` flag:
+
+```
+$ ava --require=any-promise/register/bluebird test.js
+```
+
+Current known implementations include `bluebird`, `q`, `when`, `rsvp`, `es6-promise`, `promise`, and `native-promise-only`. If you are not using a known implementation, you can use another registration method described below.
+
+
+#### Basic Registration
+
+As an alternative to registration shortcuts, you can call the `register` function with the preferred `Promise` implementation. The benefit of this approach is that a `Promise` library can be required by name without being a known implementation.  This approach does NOT work in the browser. To use `any-promise` in the browser use either registration shortcuts or specify the `Promise` constructor using advanced registration (see below).
+
+```javascript
+require('any-promise/register')('when')
+// -or- require('any-promise/register')('any other ES6 compatible library (known or otherwise)')
+```
+
+This registration method will try to detect the `Promise` constructor from requiring the specified implementation.  If you would like to specify your own constructor, see advanced registration.
 
 
 #### Advanced Registration
@@ -111,3 +132,8 @@ Node.js versions prior to `v0.12` may have contained buggy versions of the globa
 If an implementation is not registered, `any-promise` will attempt to discover an installed `Promise` implementation.  If no implementation can be found, an error will be thrown on `require('any-promise')`.  While the auto-discovery usually avoids errors, it is non-deterministic. It is recommended that the user always register a preferred implementation for older Node.js versions.
 
 This auto-discovery is only available for Node.jS versions prior to `v0.12`. Any newer versions will always default to the global `Promise` implementation.
+
+### Related
+
+- [any-observable](https://github.com/sindresorhus/any-observable) - `any-promise` for Observables.
+

@@ -3,6 +3,7 @@
   "version": "1.2.0",
   "description": "Resolve any installed ES6 compatible promise",
   "main": "index.js",
+  "typings": "index.d.ts",
   "browser": {
     "./register.js": "./register-shim.js"
   },

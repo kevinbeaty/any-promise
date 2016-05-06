@@ -54,7 +54,7 @@ Shortcut registration is the preferred registration method as it works in the br
 $ ava --require=any-promise/register/bluebird test.js
 ```
 
-Current known implementations include `bluebird`, `q`, `when`, `rsvp`, `es6-promise`, `promise`, and `native-promise-only`. If you are not using a known implementation, you can use another registration method described below.
+Current known implementations include `bluebird`, `q`, `when`, `rsvp`, `es6-promise`, `promise`, `native-promise-only`, `pinkie`, `vow` and `lie`. If you are not using a known implementation, you can use another registration method described below.
 
 
 #### Basic Registration

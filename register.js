@@ -80,7 +80,10 @@ function tryAutoDetect(){
       "bluebird",
       "rsvp",
       "when",
-      "q"]
+      "q",
+      "pinkie",
+      "lie",
+      "vow"]
   var i = 0, len = libs.length
   for(; i < len; i++){
     try {

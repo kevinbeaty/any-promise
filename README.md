@@ -6,29 +6,39 @@ Let your library support any ES 2015 (ES6) compatible `Promise` and leave the ch
 
 If no preference is registered, defaults to the global `Promise` for newer Node.js versions. The browser version defaults to the window `Promise`, so polyfill or register as necessary.
 
-### Library Usage
+#### Usage:
 
-To use any `Promise` constructor, simply require it:
+Assuming `bluebird` is the desired Promise implementation:
+
+```bash
+# Install preferred promise library
+$ npm install bluebird
+# Install any-promise to allow registration
+$ npm install any-promise
+# Install any libraries you would like to use depending on any-promise
+$ npm install mz
+```
+Register your preference in the application entry point before any other `require` of packages that load `any-promise`:
 
 ```javascript
-var Promise = require('any-promise');
+// top of application index.js or other entry point
+require('any-promise/register/bluebird')
 
-return Promise
-  .all([xf, f, init, coll])
-  .then(fn);
-
-
-return new Promise(function(resolve, reject){
-  try {
-    resolve(item);
-  } catch(e){
-    reject(e);
-  }
-});
-
+// -or- Equivalent to above, but allows customization of Promise library
+require('any-promise/register')('bluebird', {Promise: require('bluebird')})
 ```
 
-Libraries using `any-promise` should only use [documented](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) functions as there is no guarantee which implementation will be chosen by the application author.  Libraries should never call `register`, only the application user should call if desired.
+Now that the implementation is registered, you can use any package depending on `any-promise`:
+
+
+```javascript
+var fsp = require('mz/fs') // mz/fs will use registered bluebird promises
+var Promise = require('any-promise')  // the registered bluebird promise 
+```
+
+It is safe to call `register` multiple times, but it must always be with the same implementation.
+
+Again, registration is *optional*. It should only be called by the application user if overriding the global `Promise` implemementation is desired.
 
 ### Optional Application Registration
 
@@ -86,41 +96,32 @@ Your preference will be registered globally, allowing a single registration even
 require('../register')('es6-promise', {Promise: require('es6-promise').Promise, global: false})
 ```
 
-#### Example:
+### Library Usage
 
-Assuming `bluebird` is the desired Promise implementation:
-
-```bash
-# Install preferred promise library
-$ npm install bluebird
-# Install any-promise to allow registration
-$ npm install any-promise
-# Install any libraries you would like to use depending on any-promise
-$ npm install mz
-```
-Register your preference in the application entry point before any other `require` of packages that load `any-promise`:
+To use any `Promise` constructor, simply require it:
 
 ```javascript
-// top of application index.js or other entry point
-require('any-promise/register')('bluebird')
+var Promise = require('any-promise');
 
-// -or- Equivalent to above in Node.js, but browser version needs polyfill or explicit registration
-require('any-promise/register')('bluebird', {Promise: require('bluebird')})
+return Promise
+  .all([xf, f, init, coll])
+  .then(fn);
+
+
+return new Promise(function(resolve, reject){
+  try {
+    resolve(item);
+  } catch(e){
+    reject(e);
+  }
+});
+
 ```
 
-Now that the implementation is registered, you can use any package depending on `any-promise`:
+Libraries using `any-promise` should only use [documented](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) functions as there is no guarantee which implementation will be chosen by the application author.  Libraries should never call `register`, only the application user should call if desired.
 
 
-```javascript
-var fsp = require('mz/fs') // mz/fs will use registered bluebird promises
-var Promise = require('any-promise')  // the registered bluebird promise 
-```
-
-It is safe to call `register` multiple times, but it must always be with the same implementation.
-
-Again, registration is not required. It should only be called by the application user if overriding the default implementation is desired.
-
-### Advanced Library Usage
+#### Advanced Library Usage
 
 If your library needs to branch code based on the registered implementation, you can retrieve it using `var impl = require('any-promise/implementation')`, where `impl` will be the package name (`"bluebird"`, `"when"`, etc.) if registered, `"global.Promise"` if using the global version on Node.js, or `"window.Promise"` if using the browser version. You should always include a default case, as there is no guarantee what package may be registered.
 

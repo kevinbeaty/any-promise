@@ -37,7 +37,7 @@ function loadImplementation(implementation){
     throw new Error('Cannot find any-promise implementation nor'+
       ' global.Promise. You must install polyfill or call'+
       ' require("any-promise/register") with your preferred'+
-      ' implementation, e.g. require("any-promise/register")("bluebird")'+
+      ' implementation, e.g. require("any-promise/register/bluebird")'+
       ' on application load prior to any require("any-promise").')
   }
 

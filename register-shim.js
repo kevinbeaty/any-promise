@@ -9,7 +9,7 @@ module.exports = require('./loader')(window, loadImplementation)
 function loadImplementation(){
   if(typeof window.Promise === 'undefined'){
     throw new Error("any-promise browser requires a polyfill or explicit registration"+
-      " e.g: require('any-promise/register')('bluebird', {Promise: require('bluebird')})")
+      " e.g: require('any-promise/register/bluebird')")
   }
   return {
     Promise: window.Promise,

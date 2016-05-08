@@ -2,11 +2,31 @@
 
 [![Build Status](https://secure.travis-ci.org/kevinbeaty/any-promise.svg)](http://travis-ci.org/kevinbeaty/any-promise)
 
-Let your library support any ES 2015 (ES6) compatible `Promise` and leave the choice to application authors. The application can register its preferred `Promise` implementation and it will be exported when requiring `any-promise` from library code.
+Let your library support any ES 2015 (ES6) compatible `Promise` and leave the choice to application authors. The application can *optionally* register its preferred `Promise` implementation and it will be exported when requiring `any-promise` from library code.
 
 If no preference is registered, defaults to the global `Promise` for newer Node.js versions. The browser version defaults to the window `Promise`, so polyfill or register as necessary.
 
-#### Usage:
+### Usage with global Promise:
+
+Assuming the global `Promise` is the desired implementation:
+
+```bash
+# Install any libraries depending on any-promise
+$ npm install mz
+```
+
+The installed libraries will use global Promise by default.
+
+```js
+// in library
+var Promise = require('any-promise')  // the global Promise
+
+function promiseReturningFunction(){
+    return new Promise(function(resolve, reject){...})
+}
+```
+
+### Usage with registration:
 
 Assuming `bluebird` is the desired Promise implementation:
 
@@ -18,6 +38,7 @@ $ npm install any-promise
 # Install any libraries you would like to use depending on any-promise
 $ npm install mz
 ```
+
 Register your preference in the application entry point before any other `require` of packages that load `any-promise`:
 
 ```javascript
@@ -38,7 +59,7 @@ var Promise = require('any-promise')  // the registered bluebird promise
 
 It is safe to call `register` multiple times, but it must always be with the same implementation.
 
-Again, registration is *optional*. It should only be called by the application user if overriding the global `Promise` implemementation is desired.
+Again, registration is *optional*. It should only be called by the application user if overriding the global `Promise` implementation is desired.
 
 ### Optional Application Registration
 
@@ -118,7 +139,7 @@ return new Promise(function(resolve, reject){
 
 ```
 
-Libraries using `any-promise` should only use [documented](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) functions as there is no guarantee which implementation will be chosen by the application author.  Libraries should never call `register`, only the application user should call if desired.
+Except noted below, libraries using `any-promise` should only use [documented](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) functions as there is no guarantee which implementation will be chosen by the application author.  Libraries should never call `register`, only the application user should call if desired.
 
 
 #### Advanced Library Usage

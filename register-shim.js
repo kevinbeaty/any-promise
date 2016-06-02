@@ -1,5 +1,9 @@
 "use strict";
-module.exports = require('./loader')(window, loadImplementation)
+
+// allow browserify build in Node.js #23
+var isBrowser = typeof window !== 'undefined'
+
+module.exports = require('./loader')(isBrowser ? window : global, loadImplementation)
 
 /**
  * Browser specific loadImplementation.  Always uses `window.Promise`
@@ -7,12 +11,12 @@ module.exports = require('./loader')(window, loadImplementation)
  * To register a custom implementation, must register with `Promise` option.
  */
 function loadImplementation(){
-  if(typeof window.Promise === 'undefined'){
+  if(typeof Promise === 'undefined'){
     throw new Error("any-promise browser requires a polyfill or explicit registration"+
       " e.g: require('any-promise/register/bluebird')")
   }
   return {
-    Promise: window.Promise,
-    implementation: 'window.Promise'
+    Promise: Promise,
+    implementation: isBrowser ? 'window.Promise' : 'global.Promise'
   }
 }

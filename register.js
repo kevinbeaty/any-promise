@@ -21,7 +21,7 @@ function loadImplementation(implementation){
     }
   } else if(implementation){
     // if implementation specified, require it
-    var lib = require(implementation)
+    var lib = (require.main ? require.main.require : require)(implementation)
     impl = {
       Promise: lib.Promise || lib,
       implementation: implementation

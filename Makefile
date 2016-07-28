@@ -1,6 +1,7 @@
 PROJECT:=any-promise
 
 JS_TARGET ?= build/$(PROJECT).js
+JS_WEBPACK ?= build/$(PROJECT)-wp.js
 
 .PHONY: all clean js test serve
 all: test js
@@ -20,10 +21,13 @@ node_modules:
 %.gz: %
 	gzip -c9 $^ > $@
 
-js: $(JS_TARGET) $(JS_TARGET:.js=.min.js)
+js: $(JS_TARGET) $(JS_TARGET:.js=.min.js) $(JS_WEBPACK) $(JS_WEBPACK:.js=.min.js)
 
 $(JS_TARGET): index.js register-shim.js register.js loader.js | build
 	`npm bin`/browserify $< > $@
+
+$(JS_WEBPACK): index.js register-shim.js register.js loader.js | build
+	`npm bin`/webpack $< $@
 
 build:
 	mkdir -p build
